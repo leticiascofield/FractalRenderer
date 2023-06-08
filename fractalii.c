@@ -14,19 +14,18 @@ int main() {
     char regraX[10000]; // -YF+XFX+FY-   
     char regraY[10000]; // +XF-YFY-FX+   
     char saida[10000];
-    char axioma;
     int numFractal;
-    int angulacao;
+    int angulacao; // 90
     int estagio = 4;
 
-    FILE *arquivo;
+    FILE *arquivo; // abrir o arquivo "saidaFractalii.txt" para escrita
     arquivo = fopen("saidaFractalii.txt", "w");  
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.\n");
         return 1;
     }
 
-    printf("Número do fractal: ");
+    printf("Número do fractal: "); // leitura dos dados do fractal
     scanf("%d", &numFractal);
     printf("Axioma: ");
     scanf("%s", entrada);
@@ -36,34 +35,34 @@ int main() {
     scanf("%s", regraX);
     printf("Regra de Y: ");
     scanf("%s", regraY);
-    memset(saida, 0, sizeof(saida)); 
-    int lenEntrada = strlen(entrada);
+    memset(saida, 0, sizeof(saida)); // memset(str, c, n) - copia o caracter c para os n primeiros caracteres do char apontada por str
+    int lenEntrada = strlen(entrada); // srtlen - retorna o tamanho do char
     int lenSaida;
     int j = 0;
     
     for (int h = 0; h < estagio; h++){
         memset(saida, 0, sizeof(saida));
-        for (int i = 0; i < lenEntrada; i++) {
+        for (int i = 0; i < lenEntrada; i++) { // iterar pelas posições da entrada, para substituí-la pelo estágio atual
             if (entrada[i] == 'X') {
-                strcat(saida, regraX); 
+                strcat(saida, regraX); // strcat - juntar dois char
             } else if (entrada[i] == 'Y') {
-                strcat(saida, regraY);
+                strcat(saida, regraY); 
             } else {
-                strncat(saida, &entrada[i], 1);
+                strncat(saida, &entrada[i], 1); // strncat - igual strcat, mas digo a quantidade que quero juntar
             }
         }
 
-        memset(entrada, 0, sizeof(entrada));
-        strcat(entrada, saida);
-        lenEntrada = strlen(entrada);
+        memset(entrada, 0, sizeof(entrada)); // limpa a entrada
+        strcat(entrada, saida); // adiciona os char de saida na entrada
+        lenEntrada = strlen(entrada); // lenEntrada e lenSaida são atualizados
         lenSaida = strlen(saida);
         fprintf(arquivo, "Estágio %d: ", h+1);
-        for (int s = 0; s < lenSaida; s++) {
+        for (int s = 0; s < lenSaida; s++) { // imprimir o estágio atual do fractal no arquivo
             if(h != 3){
                 fprintf(arquivo, "%c", saida[s]);
             } else{
                 if(saida[s] == 'F' || saida[s] == '-' || saida[s] == '+'){
-                    fprintf(arquivo, "%c", saida[s]);
+                    fprintf(arquivo, "%c", saida[s]); // para que imprima apenas o 'F', '-' e '+' no estágio 4
                 }
             }
         }
@@ -75,7 +74,7 @@ int main() {
 
     /* IMAGEM FRACTAL - CÓDIGO COM SDL2*/
 
-    SDL_Window *window = NULL;
+    SDL_Window *window = NULL; // criação de janela e renderizador
     SDL_Renderer* renderer = NULL;
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -97,10 +96,10 @@ int main() {
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     SDL_RenderClear(renderer);
 
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // define a cor (branco)
 
     // ATENÇÂO: os nomes das variáveis estão relacionados às coordenadas (x,y), não aos X e Y das regras
-    lenSaida = strlen(saida); 
+    lenSaida = strlen(saida);  // lenSaida é atualizado
     double inicioX = 200;
     double finalX = inicioX;
     double inicioY = 500;
@@ -118,20 +117,20 @@ int main() {
             double finalX = inicioX + deltaX;
             double finalY = inicioY - deltaY;
             
-            SDL_RenderDrawLine(renderer, inicioX, inicioY, finalX, finalY);
+            SDL_RenderDrawLine(renderer, inicioX, inicioY, finalX, finalY); // desenha a linha com essas coordenadas de início e fim
             
             inicioX = finalX;
             inicioY = finalY;
-        } else if (saida[s] == '-') {
+        } else if (saida[s] == '-') { // mudança de direção em 90º no sentido anti-horário
             direcao += angulo;
-        } else if (saida[s] == '+') {
+        } else if (saida[s] == '+') { // mudança de direção em 90º no sentido horário
             direcao -= angulo;
         }
     }
 
-    SDL_RenderPresent(renderer);
-    SDL_Delay(5000);
-    SDL_DestroyRenderer(renderer);
+    SDL_RenderPresent(renderer); // exibe o fractal na tela
+    SDL_Delay(5000); // tempo da imagem na tela (em milissegundos)
+    SDL_DestroyRenderer(renderer); // exclusão de janela e renderizador
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;

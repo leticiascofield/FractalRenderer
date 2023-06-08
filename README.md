@@ -4,7 +4,8 @@ INSTRUÇÕES PARA SETUP
 
 Instruções necessárias para executar os códigos do TP (Trabalho Prático). Certifique-se de ter instalado
 corretamente todas as dependências e bibliotecas necessárias para garantir
-que o programa seja executado sem erros.
+que o programa seja executado sem erros. Caso tenha dificuldades com o entendimento do código, leia ao
+comentários
 
 Ambiente Computacional
 Certifique-se de ter os seguintes requisitos em seu ambiente computacional:
