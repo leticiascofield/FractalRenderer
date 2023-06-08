@@ -3,26 +3,42 @@
 //Regras: X -> -YF+XFX+FY-
 //Y -> +XF-YFY-FX+
 
+//gcc -o fractalii  fractalii.c -lSDL2 -lm | ./fractalii
 #include <stdio.h>
 #include <string.h>
 #include "SDL2/SDL.h"
 #include <math.h>
 
 int main() {
-    char entrada[10000] = "X";
-    char regraX[10000] = "-YF+XFX+FY-";
-    char regraY[10000] = "+XF-YFY-FX+";
+    char entrada[10000]; // X
+    char regraX[10000]; // -YF+XFX+FY-   
+    char regraY[10000]; // +XF-YFY-FX+   
     char saida[10000];
-    int angulacao = 90;
-    int estagio;
-    printf("Axioma: %s\n", entrada);
-    printf("Angulação: %d\n", angulacao);
-    printf("Regra de X: %s\n", regraX);
-    printf("Regra de Y: %s\n", regraY);
-    printf("Estágio: ");
-    scanf("%d", &estagio);
+    char axioma;
+    int numFractal;
+    int angulacao;
+    int estagio = 4;
+
+    FILE *arquivo;
+    arquivo = fopen("saidaFractalii.txt", "w");  
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return 1;
+    }
+
+    printf("Número do fractal: ");
+    scanf("%d", &numFractal);
+    printf("Axioma: ");
+    scanf("%s", entrada);
+    printf("Angulo em graus: ");
+    scanf("%d", &angulacao);
+    printf("Regra de X: ");
+    scanf("%s", regraX);
+    printf("Regra de Y: ");
+    scanf("%s", regraY);
     memset(saida, 0, sizeof(saida)); 
     int lenEntrada = strlen(entrada);
+    int lenSaida;
     int j = 0;
     
     for (int h = 0; h < estagio; h++){
@@ -40,9 +56,21 @@ int main() {
         memset(entrada, 0, sizeof(entrada));
         strcat(entrada, saida);
         lenEntrada = strlen(entrada);
+        lenSaida = strlen(saida);
+        fprintf(arquivo, "Estágio %d: ", h+1);
+        for (int s = 0; s < lenSaida; s++) {
+            if(h != 3){
+                fprintf(arquivo, "%c", saida[s]);
+            } else{
+                if(saida[s] == 'F' || saida[s] == '-' || saida[s] == '+'){
+                    fprintf(arquivo, "%c", saida[s]);
+                }
+            }
+        }
+        fprintf(arquivo, "\n");
     }
 
-    printf("Saída: %s\n", saida);
+    fclose(arquivo);
 
 
     /* IMAGEM FRACTAL - CÓDIGO COM SDL2*/
@@ -72,7 +100,7 @@ int main() {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
     // ATENÇÂO: os nomes das variáveis estão relacionados às coordenadas (x,y), não aos X e Y das regras
-    int lenSaida = strlen(saida); 
+    lenSaida = strlen(saida); 
     double inicioX = 200;
     double finalX = inicioX;
     double inicioY = 500;
@@ -102,7 +130,7 @@ int main() {
     }
 
     SDL_RenderPresent(renderer);
-    SDL_Delay(3000);
+    SDL_Delay(5000);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
