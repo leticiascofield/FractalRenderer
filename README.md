@@ -1,4 +1,4 @@
-# ProjetoFractais
+# Projeto Fractais
 
 INSTRUÇÕES PARA SETUP
 
