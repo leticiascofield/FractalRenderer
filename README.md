@@ -2,7 +2,7 @@
 
 INSTRUÇÕES PARA SETUP
 
-Instruções necessárias para executar os códigos do TP (Trabalho Prático). Certifique-se de ter instalado
+Instruções necessárias para executar os códigos do projeto. Certifique-se de ter instalado
 corretamente todas as dependências e bibliotecas necessárias para garantir
 que o programa seja executado sem erros. Caso tenha dificuldades com o entendimento do código, leia ao
 comentários.
