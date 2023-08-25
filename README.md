@@ -1,5 +1,11 @@
 # Projeto Fractais
 
+![image](https://github.com/leticiascofield/FractalRenderer/assets/125830543/43686ad8-c437-4eb6-824d-0bce0fbc6d86)
+
+![image](https://github.com/leticiascofield/FractalRenderer/assets/125830543/2ebdf9f0-da6d-4be4-aa98-703cb86fceb5)
+
+![image](https://github.com/leticiascofield/FractalRenderer/assets/125830543/be188101-881b-453c-b515-fff9fdfe470f)
+
 INSTRUÇÕES PARA SETUP
 
 Instruções necessárias para executar os códigos do projeto. Certifique-se de ter instalado
